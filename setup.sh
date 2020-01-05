@@ -61,50 +61,16 @@ fi
 
 echo
 
+echo "WARNING: This script doesn't automatically install packages anymore."
+echo "Please download and install them from the releases page!"
+echo ""
 echo "Patched libwacom packages are available to better support the pen."
 echo "If you intend to use the pen, it's recommended that you install them!"
-
-if ask "Do you want to install the patched libwacom?" Y; then
-    echo "==> Downloading latest libwacom-surface..."
-
-    urls=$(curl --silent "https://api.github.com/repos/linux-surface/libwacom-surface-deb/releases/latest" \
-           | tr ',' '\n' \
-           | grep '"browser_download_url":' \
-           | sed -E 's/.*"([^"]+)".*/\1/' \
-           | grep '.deb$')
-
-    wget -P tmp $urls
-
-    echo "==> Installing latest libwacom-surface..."
-
-    sudo dpkg -i tmp/*.deb
-    rm -rf tmp
-else
-    echo "==> Not touching libwacom"
-fi
-
-echo
-
-if ask "Do you want to download and install the latest kernel?" Y; then
-    echo "==> Downloading latest kernel..."
-
-    urls=$(curl --silent "https://api.github.com/repos/linux-surface/linux-surface/releases/latest" \
-           | tr ',' '\n' \
-           | grep '"browser_download_url":' \
-           | sed -E 's/.*"([^"]+)".*/\1/' \
-           | grep '.deb$')
-
-    wget -P tmp $urls
-
-    echo
-    echo "==> Installing latest kernel..."
-
-    sudo dpkg -i tmp/*.deb
-    rm -rf tmp
-else
-    echo "==> Not downloading latest kernel"
-fi
-
-echo
-
-echo "All done! Please reboot."
+echo "  https://github.com/linux-surface/libwacom-surface-deb/releases"
+echo ""
+echo "Patched kernel:"
+echo "  https://github.com/linux-surface/linux-surface/releases"
+echo ""
+echo "For SL3/SP7, you want the latest 5.4 release."
+echo "For other devices, consider using the latest 5.3 release if you want"
+echo "touchscreen support. It's currently broken on 5.4."
